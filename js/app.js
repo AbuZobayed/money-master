@@ -1,40 +1,37 @@
-let calculateButton = document.getElementById('calculate-btn');
-let saveButton = document.getElementById('save-btn');
-let incomeValue = document.getElementById('income-input');
+
 function updateBalace() {
-
-    let totalIncome = parseFloat(incomeValue.value);
-
-    let foodValue = document.getElementById('food-input').value;
-    let rentValue = document.getElementById('rent-input').value;
-    let clothesValue = document.getElementById('clothes-input').value;
-
-    let totalBalance = parseFloat(foodValue) + parseFloat(rentValue) + parseFloat(clothesValue);
-
-    let totalValue = totalIncome - totalBalance;
-
-    let totalExpenses = document.getElementById('total-expenses');
-    let currentBalance = document.getElementById('current-balance');
-
-
-    totalExpenses.innerText = totalBalance;
-    currentBalance.innerText = totalValue;
-
-}
-calculateButton.addEventListener('click', function () {
-    updateBalace();
-});
-
-
-function discountBalance() {
-    let saveInput = document.getElementById('save-input');
-    console.log(saveInput.value);
-    console.log(incomeValue.value);
-    let savingAmount = incomeValue.value % parseInt(saveInput.value);
-
-    console.log("savingAmount => ", savingAmount);
+    const foodValue = document.getElementById('food-input');
+    const rentValue = document.getElementById('rent-input');
+    const clothesValue = document.getElementById('clothes-input');
+    const totalValue = parseFloat(foodValue.value) + parseFloat(rentValue.value) + parseFloat(clothesValue.value);
+    return totalValue;
 }
 
-saveButton.addEventListener('click', function () {
-    discountBalance();
+document.getElementById('calculate-button').addEventListener('click', function () {
+
+    // total expenses
+    document.getElementById('total-expenses').innerText = updateBalace();
+    const incomeValue = document.getElementById('income-input');
+    const incomeValueText = parseFloat(incomeValue.value) - updateBalace();
+    document.getElementById('current-balance').innerText = incomeValueText;
+
 });
+
+document.getElementById('save-button').addEventListener('click', function () {
+    // save
+    const saveValue = document.getElementById('save-input');
+    const saveValueText = saveValue.value;
+    const saveValueNumber = parseFloat(saveValueText);
+
+    const savingBalance = document.getElementById('income-input');
+    const savingBalanceText = savingBalance.value;
+    const savingBalanceNumber = parseFloat(savingBalanceText);
+    const totalSavings = (savingBalanceNumber * saveValueNumber) / 100;
+
+    document.getElementById('save-Amount').innerText = totalSavings;
+    const remainingBalance = document.getElementById('current-balance').innerText;
+
+    const remainingBalanceNumber = parseFloat(remainingBalance);
+    document.getElementById('remaining-balance').innerText = remainingBalanceNumber - totalSavings;
+});
+
